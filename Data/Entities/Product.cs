@@ -9,4 +9,6 @@ public class Product
     public string? ImageUri { get; set; }
     public int? CategoryId { get; set; }
     public Category? Category { get; set; }
+
+    public override string? ToString() => this.Name;
 }

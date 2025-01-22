@@ -22,9 +22,36 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{x:Static p:Resources.Product}" 
- HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <c:ListViewProducts Grid.Row="1"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Height="50" 
+                Background="MediumPurple"
+                Margin="0,0,0,10">    
+            <TextBlock Text="{x:Static p:Resources.Product}" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+        <!--<c:ListViewProducts Grid.Row="1"/>-->
+        <!--<ListBox Grid.Row="1" ItemsSource="{Binding Products}"/>-->
+        <ListView Grid.Row="1" x:Name="ListProductos"
+          ItemsSource="{Binding Products}"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Top" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding ImageUri}" Width="50" Height="50" Margin="0,0,10,0" />
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                <TextBlock Text="{Binding Description}" />
+                                <TextBlock Text="{Binding Price, StringFormat='{}{0} €'}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </Grid>
 </UserControl>

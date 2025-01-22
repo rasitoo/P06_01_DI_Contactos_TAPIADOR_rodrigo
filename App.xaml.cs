@@ -24,10 +24,10 @@ public partial class App : Application
         services.AddTransient<MainWindow>();
         services.AddTransient<MainViewModel>();
         services.AddTransient<CategoryView>();
-        services.AddTransient<ListViewCategories>();
+        //services.AddTransient<ListViewCategories>();
         services.AddTransient<CategoryViewModel>();
         services.AddTransient<ProductView>();
-        services.AddTransient<ListViewProducts>();
+        //services.AddTransient<ListViewProducts>();
         services.AddTransient<ProductViewModel>();
         services.AddTransient<SettingsView>();
         services.AddTransient<SettingsViewModel>();
@@ -42,77 +42,73 @@ public partial class App : Application
         var serviceProvider = services.BuildServiceProvider();
 
 
-        // Solo para cargar datos dummy, quitar en aplicación en producción. Generado con Copilot
-        using (var scope = serviceProvider.CreateScope())
-        {
-            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            dbContext.Database.EnsureCreated();
+        //// Solo para cargar datos dummy, quitar en aplicación en producción. Generado con Copilot
+        //using (var scope = serviceProvider.CreateScope())
+        //{
+        //    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        //    dbContext.Database.EnsureCreated();
 
-            if (dbContext.Categories.Count<Category>() == 0)
-            {
-                var categories = new List<Category>
-                {
-                    new Category { Name = "Verduras" },
-                    new Category { Name = "Carnes" },
-                    new Category { Name = "Herramientas" },
-                    new Category { Name = "Menaje" }
-                };
+        //    if (dbContext.Categories.Count<Category>() == 0)
+        //    {
+        //        var categories = new List<Category>
+        //        {
+        //            new Category { Name = "Verduras" },
+        //            new Category { Name = "Carnes" },
+        //            new Category { Name = "Herramientas" },
+        //            new Category { Name = "Menaje" }
+        //        };
 
-                dbContext.Categories.AddRange(categories);
-                dbContext.SaveChanges();
+        //        dbContext.Categories.AddRange(categories);
+        //        dbContext.SaveChanges();
 
-                var products = new List<Product>
-                {
-                    // Verduras
-                    new Product { Name = "Tomate", Description = "Tomate fresco", Price = 1.5, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Lechuga", Description = "Lechuga verde", Price = 1.0, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Zanahoria", Description = "Zanahoria orgánica", Price = 0.8, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Pepino", Description = "Pepino fresco", Price = 1.2, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Espinaca", Description = "Espinaca fresca", Price = 1.3, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
+        //        var products = new List<Product>
+        //        {
+        //            // Verduras
+        //            new Product { Name = "Tomate", Description = "Tomate fresco", Price = 1.5, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Lechuga", Description = "Lechuga verde", Price = 1.0, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Zanahoria", Description = "Zanahoria orgánica", Price = 0.8, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Pepino", Description = "Pepino fresco", Price = 1.2, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Espinaca", Description = "Espinaca fresca", Price = 1.3, CategoryId = categories[0].Id, ImageUri = "https://picsum.photos/250/250" },
 
-                    // Carnes
-                    new Product { Name = "Pollo", Description = "Pollo fresco", Price = 5.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Ternera", Description = "Ternera de primera", Price = 10.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Cerdo", Description = "Cerdo fresco", Price = 7.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Cordero", Description = "Cordero fresco", Price = 12.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Pavo", Description = "Pavo fresco", Price = 8.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            // Carnes
+        //            new Product { Name = "Pollo", Description = "Pollo fresco", Price = 5.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Ternera", Description = "Ternera de primera", Price = 10.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Cerdo", Description = "Cerdo fresco", Price = 7.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Cordero", Description = "Cordero fresco", Price = 12.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Pavo", Description = "Pavo fresco", Price = 8.0, CategoryId = categories[1].Id, ImageUri = "https://picsum.photos/250/250" },
 
-                    // Herramientas
-                    new Product { Name = "Martillo", Description = "Martillo de acero", Price = 15.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Destornillador", Description = "Destornillador de estrella", Price = 5.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Llave inglesa", Description = "Llave inglesa ajustable", Price = 20.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Taladro", Description = "Taladro eléctrico", Price = 50.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Sierra", Description = "Sierra manual", Price = 25.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            // Herramientas
+        //            new Product { Name = "Martillo", Description = "Martillo de acero", Price = 15.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Destornillador", Description = "Destornillador de estrella", Price = 5.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Llave inglesa", Description = "Llave inglesa ajustable", Price = 20.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Taladro", Description = "Taladro eléctrico", Price = 50.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Sierra", Description = "Sierra manual", Price = 25.0, CategoryId = categories[2].Id, ImageUri = "https://picsum.photos/250/250" },
 
-                    // Menaje
-                    new Product { Name = "Plato", Description = "Plato de cerámica", Price = 3.0, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Vaso", Description = "Vaso de cristal", Price = 2.0, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Cuchara", Description = "Cuchara de acero inoxidable", Price = 1.5, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Tenedor", Description = "Tenedor de acero inoxidable", Price = 1.5, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" },
-                    new Product { Name = "Cuchillo", Description = "Cuchillo de cocina", Price = 2.5, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" }
-                };
+        //            // Menaje
+        //            new Product { Name = "Plato", Description = "Plato de cerámica", Price = 3.0, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Vaso", Description = "Vaso de cristal", Price = 2.0, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Cuchara", Description = "Cuchara de acero inoxidable", Price = 1.5, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Tenedor", Description = "Tenedor de acero inoxidable", Price = 1.5, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" },
+        //            new Product { Name = "Cuchillo", Description = "Cuchillo de cocina", Price = 2.5, CategoryId = categories[3].Id, ImageUri = "https://picsum.photos/250/250" }
+        //        };
 
-                dbContext.Products.AddRange(products);
-                dbContext.SaveChanges();
-            }
-        }
-        //
+        //        dbContext.Products.AddRange(products);
+        //        dbContext.SaveChanges();
+        //    }
+        //}
+        ////
 
 
         var view = serviceProvider.GetService<MainWindow>();
         view.DataContext = serviceProvider.GetService<MainViewModel>();
 
-        var listViewProducts = serviceProvider.GetService<ListViewProducts>();
-        listViewProducts.DataContext = serviceProvider.GetService<ProductViewModel>();
+        var productView = serviceProvider.GetService<ProductView>();
+        productView.DataContext = serviceProvider.GetService<ProductViewModel>();
 
-        // var ProductView = serviceProvider.GetService<ProductView>();
-        //ProductView.DataContext = serviceProvider.GetService<ProductViewModel>();
-
-         var listViewCategories = serviceProvider.GetService<ListViewCategories>();
-        listViewCategories.DataContext = serviceProvider.GetService<CategoryViewModel>();
-
-        // var CategoryView = serviceProvider.GetService<CategoryView>();
-        //CategoryView.DataContext = serviceProvider.GetService<CategoryViewModel>();
+        //var categoryView = serviceProvider.GetService<CategoryView>();
+        //categoryView.DataContext = serviceProvider.GetService<CategoryViewModel>();
+        //var listViewProductos = serviceProvider.GetService<ListViewProducts>();
+        //listViewProductos.DataContext = serviceProvider.GetService<ProductViewModel>();
 
         view.Show();
     }

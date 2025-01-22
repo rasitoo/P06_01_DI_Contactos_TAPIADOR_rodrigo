@@ -27,7 +27,7 @@
                 <c:ButtonNav Text="{x:Static p:Resources.NavSettings}" Icon="Settings" Command="{Binding ActivateSettingsViewCommand}" GroupName="SideMenu" />
             </StackPanel>
             <StackPanel Grid.Row="1">
-            <c:ButtonNav Text="{x:Static p:Resources.NavExit}" Icon="ArrowExit" Command="{Binding ExitCommand}" />
+                <c:ButtonNav Text="{x:Static p:Resources.NavExit}" Icon="ArrowExit" Command="{Binding ExitCommand}" />
             </StackPanel>
 
             <ContentControl Name="Content" Content="{Binding ActiveView}" Grid.Column="1" Grid.RowSpan="2" />

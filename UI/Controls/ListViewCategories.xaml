@@ -12,7 +12,7 @@
     <Grid>
         <ListView ItemsSource="{Binding Categories}"
                   HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
+                  VerticalAlignment="Top">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">

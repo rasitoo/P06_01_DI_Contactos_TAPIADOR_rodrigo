@@ -2,18 +2,21 @@
 using P06_01_DI_Contactos_TAPIADOR_rodrigo.Data.Entities;
 using P06_01_DI_Contactos_TAPIADOR_rodrigo.Services.Services;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace P06_01_DI_Contactos_TAPIADOR_rodrigo.UI.ViewModels;
 
-partial class ProductViewModel(IRepositoryService<Product> productService) : ObservableObject
+partial class ProductViewModel : ObservableObject
 {
+    private readonly IRepositoryService<Product> _productService;
 
     [ObservableProperty]
-    private object _activeView;
+    private ObservableCollection<Product> _products;
 
-
-    [ObservableProperty]
-    private ObservableCollection<Product> _products = new(productService.GetAll());
-
-
+    public ProductViewModel(IRepositoryService<Product> productService)
+    {
+        _productService = productService;
+        _products = new(productService.GetAll());
+        MessageBox.Show("hay " + _products.Count() + " productos");
+    }
 }
